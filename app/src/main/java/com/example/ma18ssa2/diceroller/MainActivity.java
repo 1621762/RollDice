@@ -58,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
      TextView tv = (TextView) this.findViewById(R.id.numberTextView);
 
         Random r = new Random();
-        int number = r.nextInt(6)+1;
+        int number = r.nextInt(10)+1;
 
         tv.setText(Integer.toString(number));
-        
+
 
     }
 }
