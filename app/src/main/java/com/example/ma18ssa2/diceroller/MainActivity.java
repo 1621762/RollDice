@@ -12,11 +12,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.ref.SoftReference;
+import java.util.ArrayList;
 import java.util.Random;
 
 import static android.R.id.input;
 
 public class MainActivity extends AppCompatActivity {
+
+    TextView score;
+    ArrayList<String> Q;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        score = (TextView)findViewById(R.id.currentPoint);
+
+        Q = new ArrayList<>();
+        Q.add("If you could go anywhere in the world, where would you go?");
+        Q.add("If you were stranded on a desert island, what three things would you want to take with you?");
+        Q.add("If you could eat only one food for the rest of your life, what would that be?");
+        Q.add("If you won a million dollars, what is the first thing you would buy?");
+        Q.add("If you could spaned the day with one fictional character, who would it be?");
+        Q.add("If you found a magic lantern and a genie gave you three wishes, what would you wish?");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -59,27 +74,37 @@ public class MainActivity extends AppCompatActivity {
 
     public void on_button_click (View view)
     {
-     TextView tv = (TextView) this.findViewById(R.id.numberTextView);
 
-        Random r = new Random();
-        int number = r.nextInt(6)+1;
+        TextView tv = (TextView) this.findViewById(R.id.numberTextView);//
 
-        tv.setText(Integer.toString(number));
+        Random r = new Random(); //
+        int number = r.nextInt(6)+1;//
 
-        EditText Input = (EditText) this.findViewById(R.id.inputBox);
+        tv.setText(Integer.toString(number));//
 
-        int guess = Integer.parseInt(Input.getText().toString());
+        EditText Input = (EditText) this.findViewById(R.id.inputBox);//
+
+        int guess = Integer.parseInt(Input.getText().toString());//
         if(guess <1 || guess>6){
             Toast.makeText(this, "invalid input",Toast.LENGTH_SHORT).show();
 
         }
         else if(guess == number){
             Toast.makeText(this, "congratulations",Toast.LENGTH_SHORT).show();
-            TextView points = (TextView) this.findViewById(R.id.counter);
-            int counter = Integer.parseInt(points.getText().toString());
-             counter = counter + 1;
-            points.setText(String.valueOf(counter));
+            int currentPoint = Integer.parseInt(score.getText().toString());
+            currentPoint = currentPoint + 1;
+            score.setText(String.valueOf(currentPoint));
         }
+    }
+
+    public void roll_the_dice (View view)
+    {
+        Random rand = new Random ();
+        int index = rand.nextInt(6)+1;
+
+        String questions = Q.get(index - 1);
+        TextView tv = (TextView) findViewById(R.id.Questions);
+        tv.setText(questions);
     }
 
 }
